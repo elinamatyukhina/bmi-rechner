@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mein BMI-Rechner</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>BMI-Rechner</h1>
+        <p>Berechne deinen Body-Mass-Index.</p>
+
+        <form action="cgi-bin/bmi.cgi" method="post" novalidate>
+            <label for="name">Dein Name:</label>
+            <input type="text" id="name" name="name">
+            <p class="error" id="name-error"></p>
+
+            <label for="gewicht">Gewicht (kg):</label>
+            <input type="number" id="gewicht" name="gewicht" step="0.1">
+            <p class="error" id="gewicht-error"></p>
+
+            <label for="groesse">Größe (cm):</label>
+            <input type="number" id="groesse" name="groesse" step="0.1">
+            <p class="error" id="groesse-error"></p>
+
+            <button type="submit">BMI berechnen</button>
+        </form>
+
+	<p>
+            GitHub-Repository:
+            <a href="DEIN-REPOSITORY-LINK">Hier klicken</a>
+        </p>
+    </div>
+
+    <script>
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", function(event) {
+            let valid = true;
+
+            document.querySelectorAll(".error").forEach(function(error) {
+                error.textContent = "";
+            });
+
+            const name = document.getElementById("name").value.trim();
+            const gewicht = document.getElementById("gewicht").value;
+            const groesse = document.getElementById("groesse").value;
+
+            if (!name) {
+                document.getElementById("name-error").textContent =
+                    "Bitte gib deinen Namen ein.";
+                valid = false;
+            }
+
+            if (!gewicht || Number(gewicht) <= 0) {
+                document.getElementById("gewicht-error").textContent =
+                    "Bitte gib ein gültiges Gewicht ein.";
+                valid = false;
+            }
+
+            if (!groesse || Number(groesse) <= 0) {
+                document.getElementById("groesse-error").textContent =
+                    "Bitte gib eine gültige Größe ein.";
+                valid = false;
+            }
+
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
